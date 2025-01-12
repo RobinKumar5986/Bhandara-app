@@ -12,6 +12,7 @@ import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthGraph.aut
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthGraph.homeNavigationGraph
 
 
+//change
 @Composable
 fun MainNavGraph(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
