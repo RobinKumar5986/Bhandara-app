@@ -35,8 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.hometriangle.bhandara.FirebaseUtils.OtpStatus
-import com.hometriangle.bhandara.FirebaseUtils.initiateOtpVerification
+import com.hometriangle.bhandara.UtilFunctions.OtpStatus
+import com.hometriangle.bhandara.UtilFunctions.initiateOtpVerification
 import com.hometriangle.bhandara.R
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthScreenId
 import com.hometriangle.bhandara.ui.layouts.UiUtils.FeaturesCard

@@ -8,11 +8,10 @@ import androidx.navigation.compose.rememberNavController
 import com.hometriangle.bhandara.ui.NavDestination.AuthScreenGraph
 import com.hometriangle.bhandara.ui.NavDestination.HomeScreenGraph
 import com.hometriangle.bhandara.ui.NavDestination.NavDestDataModels
-import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthGraph.authScreenGraph
-import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthGraph.homeNavigationGraph
+import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.authScreenGraph
+import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.homeNavigationGraph
 
 
-//change
 @Composable
 fun MainNavGraph(modifier: Modifier = Modifier) {
     val navController = rememberNavController()

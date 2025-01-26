@@ -1,17 +1,14 @@
 package com.hometriangle.bhandara.ui.layouts.Auth
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,20 +24,17 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import com.hometriangle.bhandara.ui.NavDestination.AuthScreenGraph
-import com.hometriangle.bhandara.ui.NavDestination.HomeScreenGraph
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthScreenId
-
 import com.hometriangle.bhandara.ui.layouts.UiUtils.OTPTextField
 import com.hometriangle.bhandara.ui.theme.DarkGrey
 import com.hometriangle.bhandara.ui.theme.SpaceExtremeHuge
 import com.hometriangle.bhandara.ui.theme.body
 import com.hometriangle.bhandara.ui.theme.disable_button_color
 import com.hometriangle.bhandara.ui.theme.primary_button_color
-import com.hometriangle.bhandara.ui.theme.space_huge
-import com.hometriangle.bhandara.ui.theme.subTitle
+
 @Composable
 fun OtpVerificationScreen(
-    args: AuthScreenGraph.OtpVerificationScreen = AuthScreenGraph.OtpVerificationScreen(phoneNumber =  "999", userId = "nckesjbd"),
+    args: AuthScreenGraph.OtpVerificationScreen,
     nav: (AuthScreenId) ->Unit
 ) {
     var value by remember { mutableStateOf("") }

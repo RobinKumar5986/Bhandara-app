@@ -1,4 +1,4 @@
-package com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthGraph
+package com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

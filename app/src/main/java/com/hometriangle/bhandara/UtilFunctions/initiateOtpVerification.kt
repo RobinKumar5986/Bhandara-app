@@ -1,4 +1,4 @@
-package com.hometriangle.bhandara.FirebaseUtils
+package com.hometriangle.bhandara.UtilFunctions
 
 import android.content.Context
 import android.util.Log
