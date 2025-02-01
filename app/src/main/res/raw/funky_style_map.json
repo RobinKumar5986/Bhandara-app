@@ -1,0 +1,191 @@
+[
+  {
+    "featureType": "all",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ffcccb"  // Light pink
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff6f61"  // Coral
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#ff3b3f"  // Bright red
+      }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#88d8b0"  // Mint green
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#a2daf2"  // Sky blue
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ffcc5c"  // Sunny yellow
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#b2ff59"  // Lime green
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff6f61"  // Coral
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff3b3f"  // Bright red
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff6f61"  // Coral
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ffcc5c"  // Sunny yellow
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#6b5b95"  // Deep purple
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff6f61"  // Coral
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#00ccff"  // Bright blue
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#ffffff"  // White
+      }
+    ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff6f61"  // Coral
+      }
+    ]
+  },
+  {
+    "featureType": "poi.medical",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ff3b3f"  // Bright red
+      }
+    ]
+  },
+  {
+    "featureType": "poi.attraction",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#ffcc5c"  // Sunny yellow
+      }
+    ]
+  },
+  {
+    "featureType": "poi.government",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#6b5b95"  // Deep purple
+      }
+    ]
+  },
+  {
+    "featureType": "poi.school",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#88d8b0"  // Mint green
+      }
+    ]
+  },
+  {
+    "featureType": "poi.place_of_worship",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#a2daf2"  // Sky blue
+      }
+    ]
+  }
+]

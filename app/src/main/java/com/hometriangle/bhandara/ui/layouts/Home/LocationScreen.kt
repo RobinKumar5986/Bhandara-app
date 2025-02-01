@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -29,39 +30,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.LocationServices
+import com.hometriangle.bhandara.MainApplication
 import com.hometriangle.bhandara.R
 import com.hometriangle.bhandara.UtilFunctions.detectLocation
 import com.hometriangle.bhandara.UtilFunctions.openAppSettings
+import com.hometriangle.bhandara.databaseUtils.DbStates
+import com.hometriangle.bhandara.databaseUtils.tablesS1.LocationEntity
+import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.HomeScreenId
 import com.hometriangle.bhandara.ui.theme.DarkGrey
 import com.hometriangle.bhandara.ui.theme.SpaceExtremeHuge
 import com.hometriangle.bhandara.ui.theme.TrueWhite
 import com.hometriangle.bhandara.ui.theme.primary_button_color
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LocationScreen(
-    nav: () -> Unit
+    viewModel:HomeViewModel = HomeViewModel(),
+    nav: (HomeScreenId) -> Unit
+
 ) {
     val context = LocalContext.current
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
     val locationPermissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
-    val sharedPreferences = context.getSharedPreferences("location_prefs", Context.MODE_PRIVATE)
+    val sharedPreferences = MainApplication.sharedPreferences
     var isLoading by remember { mutableStateOf(false) }
-
+    var isNav by remember { mutableStateOf(false) }
+    ObserveLocationInput(
+        viewModel = viewModel,
+        context = context
+    ){
+        if(!isNav) {
+            nav(HomeScreenId.HOME_SCREEN)
+        }
+    }
     LaunchedEffect(locationPermissionState.status.isGranted) {
         if (locationPermissionState.status.isGranted) {
             isLoading = true
             detectLocation(fusedLocationClient, context) { lat, long ->
+
                 isLoading = false
                 if (lat != null && long != null) {
-                    Toast.makeText(context, "lat $lat long $long", Toast.LENGTH_SHORT).show()
-
+                    sharedPreferences.edit().putInt("denial_count", 0).apply()
+                    viewModel.insertLocation(location = LocationEntity(latitude = lat, longitude = long))
+                    isNav = true
+                    nav(HomeScreenId.HOME_SCREEN)
                 }
             }
         }
@@ -93,10 +111,12 @@ fun LocationScreen(
                 onClick = {
                     if (locationPermissionState.status.isGranted) {
                         isLoading = true
+
                         detectLocation(fusedLocationClient, context) { lat, long ->
                             isLoading = false
                             if (lat != null && long != null) {
-
+                                sharedPreferences.edit().putInt("denial_count", 0).apply()
+                                viewModel.insertLocation(location = LocationEntity(latitude = lat, longitude = long))
                             }
                         }
                     } else {
@@ -149,12 +169,17 @@ fun LocationScreen(
         }
     }
 }
-
-
+@ExperimentalMaterial3Api
 @Composable
-@Preview
-fun LocationScreenPreView(){
-    LocationScreen(){
-
+fun ObserveLocationInput(
+    viewModel: HomeViewModel,
+    context: Context,
+    onSuccess: () -> Unit
+) {
+    val dbState =  viewModel.dbState.collectAsStateWithLifecycle()
+    LaunchedEffect(dbState.value) {
+        if(dbState.value == DbStates.SUCCESS){
+            onSuccess()
+        }
     }
 }

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
 }
 
 android {
@@ -42,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -54,9 +56,11 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
 }
 
 dependencies {
+    val nav_version = "2.8.5"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -89,5 +93,11 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.compose.material:material:1.7.6")
+
+    //Google Map dependency
+    implementation("com.google.maps.android:maps-compose:6.4.1")
 
 }

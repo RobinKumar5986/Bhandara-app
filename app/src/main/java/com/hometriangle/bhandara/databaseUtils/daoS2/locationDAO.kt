@@ -13,7 +13,7 @@ interface LocationDao{
     @Upsert
     suspend fun insertLocation(location: LocationEntity)
 
-//    @Query("SELECT * FROM location")
-//    suspend fun getLocation(): LiveData<List<LocationEntity>>
+    @Query("SELECT * FROM location")
+    fun getLocation(): Flow<List<LocationEntity>>
 
 }

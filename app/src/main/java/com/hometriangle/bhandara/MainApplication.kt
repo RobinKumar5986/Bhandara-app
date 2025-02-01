@@ -2,6 +2,8 @@ package com.hometriangle.bhandara
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.hometriangle.bhandara.databaseUtils.roomDBS3.AppDatabase
 
@@ -15,16 +17,20 @@ class MainApplication: Application() {
 
     companion object{
         lateinit var applicationDB: AppDatabase
+        lateinit var sharedPreferences: SharedPreferences
     }
     @Override
     override fun onCreate() {
         super.onCreate()
-
         //location table
         applicationDB = Room.databaseBuilder(
             context = applicationContext,
             klass = AppDatabase::class.java,
             name = AppDatabase.APPLICATION_DB
         ).build()
+
+        //shared pref for location check.
+        sharedPreferences = getSharedPreferences("location_prefs", Context.MODE_PRIVATE)
+
     }
 }

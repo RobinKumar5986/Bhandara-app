@@ -3,6 +3,7 @@
 package com.hometriangle.bhandara.ui.NavDestination.NavigationGraph
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.hometriangle.bhandara.ui.NavDestination.AuthScreenGraph
@@ -20,14 +21,14 @@ fun MainNavGraph(modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun StartNavigation(modifier: Modifier = Modifier, destination: String) {
+fun StartNavigation(navController: NavHostController, modifier: Modifier = Modifier, destination: String) {
     val startDestination = when (destination) {
         "HomeScreenGraph\$HomeScreenMain" -> HomeScreenGraph.HomeScreenMain
         "AuthScreenGraph\$AuthScreen" -> AuthScreenGraph.AuthScreen
         else -> AuthScreenGraph.AuthScreen
     }
 
-    val navController = rememberNavController()
+
     NavHost(navController = navController, startDestination = startDestination ) {
         authScreenGraph(navController = navController)
         homeNavigationGraph(navController = navController)
