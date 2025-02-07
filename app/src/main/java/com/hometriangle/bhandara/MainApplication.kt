@@ -1,15 +1,16 @@
 package com.hometriangle.bhandara
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.hometriangle.bhandara.databaseUtils.roomDBS3.AppDatabase
+import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MainApplication: Application() {
     /**
-     * @author: note this is the activity which is going to be present the entire time
+     * @author: [Robin Kumar] note this is the activity which is going to be present the entire time
      * till the application is alive.
      * here we are going to declare all the db and other variables which we require during the entire
      * application processing.

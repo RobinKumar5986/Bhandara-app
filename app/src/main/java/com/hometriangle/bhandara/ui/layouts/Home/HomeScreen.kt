@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -38,9 +39,9 @@ import com.hometriangle.bhandara.ui.theme.SoftPink
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = HomeViewModel(),
     nav: () -> Unit // Later will be used for navigation
 ) {
+    val viewModel: HomeViewModel = hiltViewModel()
     val locations by viewModel.locations.collectAsState()
     val context = LocalContext.current
     if (locations.isNotEmpty()) {
@@ -78,7 +79,7 @@ fun HomeScreen(
                             Marker(
                                 state = singaporeMarkerState,
                                 title = "India",
-                                snippet = "Marker in Singapore",
+                                snippet = "Marker in india",
                             )
                         }
 

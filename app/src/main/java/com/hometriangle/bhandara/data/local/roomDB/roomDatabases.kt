@@ -1,9 +1,9 @@
-package com.hometriangle.bhandara.databaseUtils.roomDBS3
+package com.hometriangle.bhandara.data.local.roomDB
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.hometriangle.bhandara.databaseUtils.daoS2.LocationDao
-import com.hometriangle.bhandara.databaseUtils.tablesS1.LocationEntity
+import com.hometriangle.bhandara.data.local.dao.LocationDao
+import com.hometriangle.bhandara.data.local.tables.LocationEntity
 
 @Database(entities = [LocationEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase(){

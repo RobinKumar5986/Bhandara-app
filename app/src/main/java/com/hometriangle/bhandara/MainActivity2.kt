@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -19,9 +20,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.StartNavigation
+import com.hometriangle.bhandara.ui.layouts.Home.HomeViewModel
 import com.hometriangle.bhandara.ui.theme.BhandaraStartActivity
 import com.hometriangle.bhandara.ui.theme.md_theme_light_primary
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity2 : ComponentActivity() {
     private  val BAN_BOTTOM_NAV_BAR = setOf(
         "com.hometriangle.bhandara.ui.NavDestination.AuthScreenGraph.LandingScreen",

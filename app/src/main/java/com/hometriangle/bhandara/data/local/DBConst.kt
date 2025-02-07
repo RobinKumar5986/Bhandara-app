@@ -1,4 +1,4 @@
-package com.hometriangle.bhandara.databaseUtils
+package com.hometriangle.bhandara.data.local
 
 enum class DbStates{
     LOADING,

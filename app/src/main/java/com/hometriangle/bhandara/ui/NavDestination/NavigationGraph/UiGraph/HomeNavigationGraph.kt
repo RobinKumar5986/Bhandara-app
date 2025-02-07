@@ -1,6 +1,5 @@
 package com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph
 
-import androidx.compose.material3.Text
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -26,8 +25,7 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
         }
 
         composable<HomeScreenGraph.HomeScreen> {
-            val viewModel: HomeViewModel = HomeViewModel()
-            HomeScreen(viewModel = viewModel , nav= {
+            HomeScreen(nav= {
 
             })
         }

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hometriangle.bhandara.databaseUtils.roomDBS3.AppDatabase
-import com.hometriangle.bhandara.databaseUtils.tablesS1.LocationEntity
+import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
+import com.hometriangle.bhandara.data.local.tables.LocationEntity
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

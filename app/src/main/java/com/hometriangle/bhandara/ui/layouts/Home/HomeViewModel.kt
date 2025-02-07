@@ -1,22 +1,26 @@
 package com.hometriangle.bhandara.ui.layouts.Home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hometriangle.bhandara.MainApplication
-import com.hometriangle.bhandara.databaseUtils.DbStates
-import com.hometriangle.bhandara.databaseUtils.roomDBS3.AppDatabase
-import com.hometriangle.bhandara.databaseUtils.tablesS1.LocationEntity
+import com.hometriangle.bhandara.data.local.DbStates
+import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
+import com.hometriangle.bhandara.data.local.tables.LocationEntity
+import com.hometriangle.bhandara.data.remote.repository.AppRepository
+import com.hometriangle.bhandara.data.remote.repository.AppRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
-    applicationDb: AppDatabase = MainApplication.applicationDB
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: AppRepository
 ): ViewModel() {
+    val applicationDb: AppDatabase = MainApplication.applicationDB
     private val locationDao = applicationDb.locationDao()
 
     private val _dbState = MutableStateFlow<DbStates>(DbStates.LOADING)

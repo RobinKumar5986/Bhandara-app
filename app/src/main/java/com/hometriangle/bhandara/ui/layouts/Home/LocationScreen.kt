@@ -1,7 +1,6 @@
 package com.hometriangle.bhandara.ui.layouts.Home
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -40,8 +40,8 @@ import com.hometriangle.bhandara.MainApplication
 import com.hometriangle.bhandara.R
 import com.hometriangle.bhandara.UtilFunctions.detectLocation
 import com.hometriangle.bhandara.UtilFunctions.openAppSettings
-import com.hometriangle.bhandara.databaseUtils.DbStates
-import com.hometriangle.bhandara.databaseUtils.tablesS1.LocationEntity
+import com.hometriangle.bhandara.data.local.DbStates
+import com.hometriangle.bhandara.data.local.tables.LocationEntity
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.HomeScreenId
 import com.hometriangle.bhandara.ui.theme.DarkGrey
 import com.hometriangle.bhandara.ui.theme.SpaceExtremeHuge
@@ -51,10 +51,9 @@ import com.hometriangle.bhandara.ui.theme.primary_button_color
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LocationScreen(
-    viewModel:HomeViewModel = HomeViewModel(),
     nav: (HomeScreenId) -> Unit
-
 ) {
+    val viewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
     val locationPermissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)

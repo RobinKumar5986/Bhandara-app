@@ -1,4 +1,4 @@
-package com.hometriangle.bhandara.databaseUtils.tablesS1
+package com.hometriangle.bhandara.data.local.tables
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

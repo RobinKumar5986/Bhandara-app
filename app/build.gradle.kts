@@ -5,6 +5,8 @@ plugins {
     id("kotlin-kapt")
     id("com.google.gms.google-services")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -99,5 +101,20 @@ dependencies {
 
     //Google Map dependency
     implementation("com.google.maps.android:maps-compose:6.4.1")
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // Hilt Dependencies
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
 
 }
