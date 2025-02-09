@@ -3,7 +3,6 @@ package com.hometriangle.bhandara.UtilFunctions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast

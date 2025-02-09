@@ -17,21 +17,16 @@ class MainApplication: Application() {
      */
 
     companion object{
-        lateinit var applicationDB: AppDatabase
         lateinit var sharedPreferences: SharedPreferences
+        lateinit var userDataPref: SharedPreferences
     }
     @Override
     override fun onCreate() {
         super.onCreate()
-        //location table
-        applicationDB = Room.databaseBuilder(
-            context = applicationContext,
-            klass = AppDatabase::class.java,
-            name = AppDatabase.APPLICATION_DB
-        ).build()
 
         //shared pref for location check.
         sharedPreferences = getSharedPreferences("location_prefs", Context.MODE_PRIVATE)
+        userDataPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
 
     }
 }

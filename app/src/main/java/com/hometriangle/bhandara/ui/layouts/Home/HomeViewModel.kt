@@ -2,26 +2,27 @@ package com.hometriangle.bhandara.ui.layouts.Home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hometriangle.bhandara.MainApplication
 import com.hometriangle.bhandara.data.local.DbStates
-import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
+import com.hometriangle.bhandara.data.local.dao.LocationDao
 import com.hometriangle.bhandara.data.local.tables.LocationEntity
+import com.hometriangle.bhandara.data.models.UserInfoDto
+import com.hometriangle.bhandara.data.remote.apiUtils.ApiResult
 import com.hometriangle.bhandara.data.remote.repository.AppRepository
-import com.hometriangle.bhandara.data.remote.repository.AppRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: AppRepository
-): ViewModel() {
-    val applicationDb: AppDatabase = MainApplication.applicationDB
-    private val locationDao = applicationDb.locationDao()
+    private val repository: AppRepository,
+    private val locationDao: LocationDao
+) : ViewModel() {
 
     private val _dbState = MutableStateFlow<DbStates>(DbStates.LOADING)
     val dbState: StateFlow<DbStates>
@@ -36,6 +37,16 @@ class HomeViewModel @Inject constructor(
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?>
         get() = _error
+
+    private val _showError = Channel<Boolean>()
+    val showError = _showError.receiveAsFlow()
+
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> get() = _isLoading
+
+    private val _regUserInfo = MutableStateFlow<UserInfoDto?>(null)
+    val regUserInfo: StateFlow<UserInfoDto?> get() = _regUserInfo
+
     init {
         getAllLocation()
     }
@@ -53,14 +64,29 @@ class HomeViewModel @Inject constructor(
 
     fun insertLocation(location: LocationEntity) {
         viewModelScope.launch {
-            _dbState.value = (DbStates.LOADING)
             try {
                 locationDao.insertLocation(location)
-                _dbState.value = (DbStates.SUCCESS)
             } catch (exception: Exception) {
-                _error.value = ("Error inserting location: ${exception.message}")
-                _dbState.value = (DbStates.ERROR)
+                _error.value = "Error inserting location: ${exception.message}"
             }
         }
     }
+    fun registerUser(userInfo: UserInfoDto) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            repository.registerUser(userInfo).collectLatest { response ->
+                _isLoading.value = false
+                when (response) {
+                    is ApiResult.Success -> {
+                        _regUserInfo.value = response.data
+                    }
+                    is ApiResult.Error -> {
+                        _error.value = response.message
+                        _showError.send(true)
+                    }
+                }
+            }
+        }
+    }
+
 }

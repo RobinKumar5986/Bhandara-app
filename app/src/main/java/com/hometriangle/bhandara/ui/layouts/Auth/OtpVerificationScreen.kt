@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
+import com.hometriangle.bhandara.MainApplication
 import com.hometriangle.bhandara.ui.NavDestination.AuthScreenGraph
 import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.AuthScreenId
 import com.hometriangle.bhandara.ui.layouts.UiUtils.OTPTextField
@@ -96,14 +97,13 @@ fun OtpVerificationScreen(
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(context, "OTP Verified Successfully", Toast.LENGTH_SHORT).show()
-                                val sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE)
+                                val sharedPreferences = MainApplication.userDataPref
                                 val editor = sharedPreferences.edit()
                                 editor.putString("phoneNumber", args.phoneNumber)
                                 editor.putString("userId", args.userId)
-                                editor.putBoolean("isLoggedIn", true)
+//                                editor.putBoolean("isLoggedIn", true)
                                 editor.apply()
                                 nav(AuthScreenId.HOME_SCREEN)
-                                // TODO: Create a API to store use in our own database
                             } else {
                                 Toast.makeText(context, "OTP Verification Failed", Toast.LENGTH_SHORT).show()
                             }

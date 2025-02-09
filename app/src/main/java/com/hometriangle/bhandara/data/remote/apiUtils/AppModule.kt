@@ -1,16 +1,22 @@
 package com.hometriangle.bhandara.data.remote.apiUtils
 
+import android.content.Context
+import androidx.room.Room
+import com.hometriangle.bhandara.data.local.dao.LocationDao
+import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
 import com.hometriangle.bhandara.data.remote.Api
 import com.hometriangle.bhandara.data.remote.repository.AppRepository
 import com.hometriangle.bhandara.data.remote.repository.AppRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -25,6 +31,9 @@ object AppModule {
         }
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .connectTimeout(1,TimeUnit.MINUTES)
+            .readTimeout(1,TimeUnit.MINUTES)
+            .writeTimeout(1,TimeUnit.MINUTES)
             .build()
 
         return Retrofit.Builder()
@@ -34,9 +43,27 @@ object AppModule {
             .build()
             .create(Api::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            AppDatabase.APPLICATION_DB
+        ).build()
+    }
+
+
     @Provides
     @Singleton
     fun provideUserRepository(api: Api): AppRepository {
         return AppRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationDao(appDatabase: AppDatabase): LocationDao {
+        return appDatabase.locationDao()
     }
 }
