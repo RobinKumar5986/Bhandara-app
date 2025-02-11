@@ -43,6 +43,9 @@ sealed class HomeScreenGraph{
 
     @Serializable
     data object HomeScreen: HomeScreenGraph()
+
+    @Serializable
+    data object CreateBhandaraScreen: HomeScreenGraph()
 }
 
 

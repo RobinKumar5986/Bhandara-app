@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface Api {
     companion object {
-        var BASE_URL = "http://192.168.68.59:9090"
+        var BASE_URL = "http://192.168.68.86:9090"
     }
 
     @POST("/user/add")

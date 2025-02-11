@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.hometriangle.bhandara.ui.NavDestination.HomeScreenGraph
+import com.hometriangle.bhandara.ui.layouts.Home.CreateBhandaraScreen
 import com.hometriangle.bhandara.ui.layouts.Home.HomeScreen
 import com.hometriangle.bhandara.ui.layouts.Home.HomeViewModel
 import com.hometriangle.bhandara.ui.layouts.Home.LocationScreen
@@ -25,7 +26,14 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
         }
 
         composable<HomeScreenGraph.HomeScreen> {
-            HomeScreen(nav= {
+            HomeScreen(nav= { navId ->
+                if(navId == HomeScreenId.CREATE_BHANDARA_SCREEN){
+                    navController.navigate(HomeScreenGraph.CreateBhandaraScreen)
+                }
+            })
+        }
+        composable<HomeScreenGraph.CreateBhandaraScreen> {
+            CreateBhandaraScreen(nav = {
 
             })
         }
@@ -33,5 +41,11 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
 }
 enum class HomeScreenId{
     LOCATION_SCREEN,
-    HOME_SCREEN
+    HOME_SCREEN,
+    ALL_BHANDARA_SCREEN,
+    CREATE_BHANDARA_SCREEN,
+    VOLUNTEER_SCREEN,
+    DONATE_SCREEN,
+    PROFILE_SCREEN,
+    MY_BHANDARA_LIST_SCREEN
 }

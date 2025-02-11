@@ -39,6 +39,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.hometriangle.bhandara.R
+import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.HomeScreenId
 import com.hometriangle.bhandara.ui.theme.DarkGrey
 import com.hometriangle.bhandara.ui.theme.PureWhite
 import com.hometriangle.bhandara.ui.theme.SoftPink
@@ -50,7 +51,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
-    nav: () -> Unit
+    nav: (navId: HomeScreenId) -> Unit
 ) {
     val context = LocalContext.current
     val brush = Brush.verticalGradient(
@@ -127,7 +128,7 @@ fun HomeScreen(
                         title = "Create Bhandara",
                         msg = "Feed People",
                         image = R.drawable.bhandara_icon,
-                        onClick = { /* Handle onClick */ }
+                        onClick = { nav(HomeScreenId.CREATE_BHANDARA_SCREEN) }
                     )
                 }
                 item {
@@ -203,7 +204,7 @@ fun HomeScreen(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f)) // Push text to bottom
+        Spacer(modifier = Modifier.weight(1f))
 
         Column(
             modifier = Modifier
