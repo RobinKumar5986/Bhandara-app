@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hometriangle.bhandara.data.local.DbStates
 import com.hometriangle.bhandara.data.local.dao.LocationDao
 import com.hometriangle.bhandara.data.local.tables.LocationEntity
+import com.hometriangle.bhandara.data.models.BhandaraDto
 import com.hometriangle.bhandara.data.models.UserInfoDto
 import com.hometriangle.bhandara.data.remote.apiUtils.ApiResult
 import com.hometriangle.bhandara.data.remote.repository.AppRepository
@@ -47,6 +48,9 @@ class HomeViewModel @Inject constructor(
     private val _regUserInfo = MutableStateFlow<UserInfoDto?>(null)
     val regUserInfo: StateFlow<UserInfoDto?> get() = _regUserInfo
 
+    private val _addedBhandara = MutableStateFlow<String?>(null)
+    val addedBhandara: StateFlow<String?> get() = _addedBhandara
+
     init {
         getAllLocation()
     }
@@ -87,6 +91,27 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+    fun addBhadara(bhandaraDto: BhandaraDto) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            repository.addBhandara(bhandaraDto).collectLatest { response ->
+                _isLoading.value = false
+                when (response) {
+                    is ApiResult.Success -> {
+                        _addedBhandara.value = response.data
+                    }
+                    is ApiResult.Error -> {
+                        _error.value = response.message
+                        _showError.send(true)
+                    }
+                }
+            }
+        }
+    }
+    fun clearData() {
+        _addedBhandara.value = null
+        _error.value = null
     }
 
 }

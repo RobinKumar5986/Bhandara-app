@@ -2,8 +2,8 @@ package com.hometriangle.bhandara.data.models
 
 data class RestResponse<T>(
     val data: T?,
-    val status: RestStatus,
-    val code: String,
+    val status: RestStatus?,
+    val code: String?,
     val message: String
 )
 enum class RestStatus {

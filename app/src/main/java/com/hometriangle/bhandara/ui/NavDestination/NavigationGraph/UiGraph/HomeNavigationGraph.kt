@@ -34,7 +34,7 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
         }
         composable<HomeScreenGraph.CreateBhandaraScreen> {
             CreateBhandaraScreen(nav = {
-
+                navController.popBackStack(route = HomeScreenGraph.HomeScreen, inclusive = false)
             })
         }
     }
