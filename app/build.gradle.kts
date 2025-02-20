@@ -7,6 +7,7 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -101,6 +102,7 @@ dependencies {
 
     //Google Map dependency
     implementation("com.google.maps.android:maps-compose:6.4.1")
+    implementation ("com.google.maps.android:maps-utils-ktx:3.4.0")
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -120,4 +122,8 @@ dependencies {
     //pager-dependency
     implementation("com.google.accompanist:accompanist-pager:0.25.1")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.25.1")
+
+//    //payment-dependency
+//    implementation ("com.shreyaspatil:EasyUpiPayment:2.0")
+
 }

@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface AppRepository {
     suspend fun registerUser(userInfo: UserInfoDto):  Flow<ApiResult<UserInfoDto>>
     suspend fun addBhandara(bhandaraDto: BhandaraDto):  Flow<ApiResult<String>>
+    suspend fun getAllUpComingBhandara(): Flow<ApiResult<List<BhandaraDto>>>
 }

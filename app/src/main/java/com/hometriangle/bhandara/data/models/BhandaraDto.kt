@@ -1,7 +1,8 @@
 package com.hometriangle.bhandara.data.models
 
-import java.util.Date
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BhandaraDto(
     val id: Long?,
     val name: String?,
@@ -10,9 +11,9 @@ data class BhandaraDto(
     val longitude: Double?,
     val createdOn: String?,
     val updatedOn: String?,
-    val dateOfBhandara: String?,
-    val startingTime: String?,
-    val endingTime: String?,
+    val dateOfBhandara: Long?,
+    val startingTime: Double?,
+    val endingTime: Double?,
     val verificationType: String?,
     val foodType: String?,
     val organizationType: String?,

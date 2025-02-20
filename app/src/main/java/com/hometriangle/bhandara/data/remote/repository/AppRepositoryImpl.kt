@@ -62,4 +62,30 @@ class AppRepositoryImpl(
             }
         }
     }
+
+    override suspend fun getAllUpComingBhandara(): Flow<ApiResult<List<BhandaraDto>>> {
+        return flow {
+            val response = try{
+                api.getAllUpComingBhandara()
+            }catch (e: IOException){
+                e.printStackTrace()
+                emit(ApiResult.Error(message =  "IO ERROR: ${e.message}"))
+                return@flow
+            }catch (e: HttpException){
+                e.printStackTrace()
+                emit(ApiResult.Error(message =  "NETWORKING ERROR: ${e.message}"))
+                return@flow
+            }catch (e: Exception) {
+                e.printStackTrace()
+                emit(ApiResult.Error(message = "ERROR: ${e.message}"))
+                return@flow
+            }
+            if(response.status == RestStatus.SUCCESS){
+                emit(ApiResult.Success(response.data ?: return@flow emit(ApiResult.Error("Data is null"))))
+            }else{
+                emit(ApiResult.Error(message = "API ERROR: ${response.message}"))
+            }
+        }
+    }
+
 }

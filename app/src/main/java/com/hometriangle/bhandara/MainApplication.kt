@@ -5,10 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.hometriangle.bhandara.data.local.roomDB.AppDatabase
+import com.hometriangle.bhandara.data.models.BhandaraDto
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApplication: Application() {
+class MainApplication : Application() {
     /**
      * @author: [Robin Kumar] note this is the activity which is going to be present the entire time
      * till the application is alive.
@@ -16,10 +17,13 @@ class MainApplication: Application() {
      * application processing.
      */
 
-    companion object{
+    companion object {
         lateinit var sharedPreferences: SharedPreferences
         lateinit var userDataPref: SharedPreferences
+        var bhandaraList: List<BhandaraDto>? = null
+        lateinit var bhandaraDto : BhandaraDto
     }
+
     @Override
     override fun onCreate() {
         super.onCreate()

@@ -17,13 +17,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,6 +60,7 @@ fun HomeScreen(
     nav: (navId: HomeScreenId) -> Unit
 ) {
     val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
     val brush = Brush.verticalGradient(
         colors = listOf(
             PureWhite,
@@ -70,6 +77,18 @@ fun HomeScreen(
         "https://fastly.picsum.photos/id/499/536/354.jpg?hmac=8f-M63IkmYvH2AXKVRL_mE-G5R9N1Qbt2rAPNq_rXvs"
     )
 
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Support Us") },
+            text = { Text("Currently We don't have this feature based on the user response from we will include this feature in future.") },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
     val pagerState = rememberPagerState(initialPage = 0)
 
     LaunchedEffect(pagerState) {
@@ -120,7 +139,7 @@ fun HomeScreen(
                         title = "Bhandara",
                         msg = "Free Food",
                         image = R.drawable.cutlery,
-                        onClick = { /* Handle onClick */ }
+                        onClick = { nav(HomeScreenId.ALL_BHANDARA_SCREEN) }
                     )
                 }
                 item {
@@ -136,7 +155,9 @@ fun HomeScreen(
                         title = "Volunteer",
                         msg = "Make change",
                         image = R.drawable.volunteer,
-                        onClick = { /* Handle onClick */ }
+                        onClick = {
+                            showDialog = true
+                        }
                     )
                 }
                 item {
@@ -144,7 +165,9 @@ fun HomeScreen(
                         title = "Donate",
                         msg = "Show support",
                         image = R.drawable.donation,
-                        onClick = { /* Handle onClick */ }
+                        onClick = {
+                            nav(HomeScreenId.DONATE_SCREEN)
+                        }
                     )
                 }
             }
@@ -160,7 +183,7 @@ fun HomeScreen(
             ),
             shape = MaterialTheme.shapes.small,
             onClick = {
-
+                nav(HomeScreenId.CREATE_BHANDARA_SCREEN)
             }
         ) {
             Row(
@@ -187,7 +210,7 @@ fun HomeScreen(
             ),
             shape = MaterialTheme.shapes.small,
             onClick = {
-                // Handle button click
+                nav(HomeScreenId.DONATE_SCREEN)
             }
         ) {
             Row(

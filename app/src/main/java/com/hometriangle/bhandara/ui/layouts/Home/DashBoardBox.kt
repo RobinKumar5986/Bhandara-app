@@ -38,10 +38,10 @@ fun DashBoardBox(
         modifier = Modifier
             .fillMaxWidth()
             .height(90.dp)
+            .clip(RoundedCornerShape(16.dp))
             .padding(8.dp)
             .background(brush, shape = RoundedCornerShape(16.dp))
             .clickable { onClick() }
-            .clip(RoundedCornerShape(16.dp))
             .padding(16.dp)
 
     ) {

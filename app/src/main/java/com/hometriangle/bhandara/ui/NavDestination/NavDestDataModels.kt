@@ -1,5 +1,10 @@
 package com.hometriangle.bhandara.ui.NavDestination
 
+import android.os.Parcelable
+import com.hometriangle.bhandara.data.models.BhandaraDto
+import com.hometriangle.bhandara.ui.NavDestination.NavigationGraph.UiGraph.HomeScreenId
+import com.hometriangle.localModel.MapScreenModel
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 /**
@@ -46,6 +51,31 @@ sealed class HomeScreenGraph{
 
     @Serializable
     data object CreateBhandaraScreen: HomeScreenGraph()
+
+    @Serializable
+    data object AllBhandaraScreen: HomeScreenGraph()
+
+    @Serializable
+    data class MapScreenLink(
+        val srcLat: Double,
+        val srcLng: Double,
+        val dstLat: Double,
+        val dstLng: Double,
+        val srcTitle: String,
+        val srcDescription: String,
+        val dstTitle: String,
+        val dstDescription: String,
+    ): HomeScreenGraph()
+
+    @Serializable
+    data object AllBhandaraMapScreen: HomeScreenGraph()
+
+    @Serializable
+    data object BhandaraDetailPage: HomeScreenGraph()
+
+    @Serializable
+    data object DonateScreen: HomeScreenGraph()
+
 }
 
 

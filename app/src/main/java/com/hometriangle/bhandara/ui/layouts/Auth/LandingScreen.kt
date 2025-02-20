@@ -159,27 +159,27 @@ fun LandingScreen(
 
             FeaturesCard()
             Spacer(modifier = Modifier.weight(1f))
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Absolute.Right) {
-                Button(
-                    onClick = {
-                        //TODO: Function for on Skip..
-                    },
-                    shape = MaterialTheme.shapes.large,
-                    border = BorderStroke(1.dp, TrueBlack),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                    modifier = Modifier
-                        .padding(vertical = SpaceSmall)
-                        .padding(end = SpaceMedium, bottom = SpaceMedium)
-                ) {
-                    Text(
-                        text = "Skip",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color =  TrueBlack,
-                            fontWeight = FontWeight.ExtraLight
-                        ),
-                    )
-                }
-            }
+//            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Absolute.Right) {
+//                Button(
+//                    onClick = {
+//                        //TODO: Function for on Skip..
+//                    },
+//                    shape = MaterialTheme.shapes.large,
+//                    border = BorderStroke(1.dp, TrueBlack),
+//                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+//                    modifier = Modifier
+//                        .padding(vertical = SpaceSmall)
+//                        .padding(end = SpaceMedium, bottom = SpaceMedium)
+//                ) {
+//                    Text(
+//                        text = "Skip",
+//                        style = MaterialTheme.typography.bodyMedium.copy(
+//                            color =  TrueBlack,
+//                            fontWeight = FontWeight.ExtraLight
+//                        ),
+//                    )
+//                }
+//            }
         }
     }
 }

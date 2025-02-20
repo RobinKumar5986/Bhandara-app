@@ -211,22 +211,22 @@ fun LocationScreen(
                     }
 
                     // Search Location Button
-                    OutlinedButton(
-                        onClick = {
-                            // TODO: Need to go for search location based using Google Map API.
-                            //@MARK: This feature is not available for now.
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
-                    ) {
-                        Text(
-                            text = "Search Location",
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+//                    OutlinedButton(
+//                        onClick = {
+//                            // TODO: Need to go for search location based using Google Map API.
+//                            //@MARK: This feature is not available for now.
+//                        },
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(56.dp),
+//                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+//                        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+//                    ) {
+//                        Text(
+//                            text = "Search Location",
+//                            color = MaterialTheme.colorScheme.primary
+//                        )
+//                    }
                 }
             }
     }else{

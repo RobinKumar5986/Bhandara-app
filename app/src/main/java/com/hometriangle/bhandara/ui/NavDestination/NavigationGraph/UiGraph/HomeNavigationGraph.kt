@@ -4,18 +4,23 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.hometriangle.bhandara.ui.NavDestination.HomeScreenGraph
+import com.hometriangle.bhandara.ui.layouts.Home.AllBhandaraMapScreen
+import com.hometriangle.bhandara.ui.layouts.Home.AllBhandaraScreen
+import com.hometriangle.bhandara.ui.layouts.Home.BhandaraDetailScreen
 import com.hometriangle.bhandara.ui.layouts.Home.CreateBhandaraScreen
+import com.hometriangle.bhandara.ui.layouts.Home.DonateScreen
 import com.hometriangle.bhandara.ui.layouts.Home.HomeScreen
-import com.hometriangle.bhandara.ui.layouts.Home.HomeViewModel
 import com.hometriangle.bhandara.ui.layouts.Home.LocationScreen
+import com.hometriangle.bhandara.ui.layouts.Home.MapScreen
 
 
 fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
     navigation<HomeScreenGraph.HomeScreenMain>(startDestination = HomeScreenGraph.LocationScreen) {
         composable<HomeScreenGraph.LocationScreen> {
-            LocationScreen(nav= { id ->
-                if(id == HomeScreenId.HOME_SCREEN) {
+            LocationScreen(nav = { id ->
+                if (id == HomeScreenId.HOME_SCREEN) {
                     navController.navigate(HomeScreenGraph.HomeScreen) {
                         popUpTo(navController.graph.id) {
                             inclusive = true
@@ -26,9 +31,13 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
         }
 
         composable<HomeScreenGraph.HomeScreen> {
-            HomeScreen(nav= { navId ->
-                if(navId == HomeScreenId.CREATE_BHANDARA_SCREEN){
+            HomeScreen(nav = { navId ->
+                if (navId == HomeScreenId.CREATE_BHANDARA_SCREEN) {
                     navController.navigate(HomeScreenGraph.CreateBhandaraScreen)
+                } else if (navId == HomeScreenId.ALL_BHANDARA_SCREEN) {
+                    navController.navigate(HomeScreenGraph.AllBhandaraScreen)
+                }else if(navId == HomeScreenId.DONATE_SCREEN){
+                    navController.navigate(HomeScreenGraph.DonateScreen)
                 }
             })
         }
@@ -37,6 +46,53 @@ fun NavGraphBuilder.homeNavigationGraph(navController: NavController) {
                 navController.popBackStack(route = HomeScreenGraph.HomeScreen, inclusive = false)
             })
         }
+        composable<HomeScreenGraph.AllBhandaraScreen> {
+            AllBhandaraScreen(nav = { id, mapModel ->
+                if(id == HomeScreenId.SINGLE_MAP_VIEW) {
+                    navController.navigate(
+                        HomeScreenGraph.MapScreenLink(
+                            srcLat = mapModel!!.srcLat,
+                            srcLng = mapModel.srcLng,
+                            dstLat = mapModel.dstLat,
+                            dstLng = mapModel.dstLng,
+                            srcTitle = mapModel.srcTitle,
+                            srcDescription = mapModel.srcDescription,
+                            dstTitle = mapModel.dstTitle,
+                            dstDescription = mapModel.dstDescription
+                        )
+                    )
+                }else if (id == HomeScreenId.ALL_BHANDARA_MAP_SCREEN){
+                    navController.navigate(HomeScreenGraph.AllBhandaraMapScreen)
+                }else if(id == HomeScreenId.BHANDARA_DETAIL_SCREEN){
+                    navController.navigate(HomeScreenGraph.BhandaraDetailPage)
+                }
+            })
+        }
+        composable<HomeScreenGraph.MapScreenLink> {
+            val data = it.toRoute<HomeScreenGraph.MapScreenLink>()
+            MapScreen(
+                srcLat = data.srcLat,
+                srcLng = data.srcLng,
+                dstLat = data.dstLat,
+                dstLng = data.dstLng,
+                srcTitle = data.srcTitle,
+                srcDescription = data.srcDescription,
+                dstTitle = data.dstTitle,
+                dstDescription = data.dstDescription
+            )
+        }
+        composable<HomeScreenGraph.AllBhandaraMapScreen> {
+            AllBhandaraMapScreen()
+        }
+        composable<HomeScreenGraph.BhandaraDetailPage> {
+            BhandaraDetailScreen(){
+
+            }
+        }
+        composable<HomeScreenGraph.DonateScreen> {
+            DonateScreen()
+        }
+
     }
 }
 enum class HomeScreenId{
@@ -47,5 +103,7 @@ enum class HomeScreenId{
     VOLUNTEER_SCREEN,
     DONATE_SCREEN,
     PROFILE_SCREEN,
-    MY_BHANDARA_LIST_SCREEN
+    SINGLE_MAP_VIEW,
+    ALL_BHANDARA_MAP_SCREEN,
+    BHANDARA_DETAIL_SCREEN,
 }

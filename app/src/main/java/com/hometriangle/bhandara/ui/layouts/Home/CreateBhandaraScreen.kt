@@ -6,13 +6,10 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,28 +47,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.gson.Gson
 import com.hometriangle.bhandara.MainApplication
 import com.hometriangle.bhandara.data.models.BhandaraDto
 import com.hometriangle.bhandara.ui.layouts.UiUtils.CenteredProgressView
 import com.hometriangle.bhandara.ui.layouts.UiUtils.DatePickerField
 import com.hometriangle.bhandara.ui.layouts.UiUtils.TimePickerField
-import com.hometriangle.bhandara.ui.layouts.utils.convertImageToBase64
+import com.hometriangle.bhandara.ui.layouts.utils.convertImageToBase64Compress
 import com.hometriangle.bhandara.ui.theme.DarkGrey
 import com.hometriangle.bhandara.ui.theme.TrueWhite
 import com.hometriangle.bhandara.ui.theme.defaultButtonColor
 import java.io.File
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.ZoneId
 import java.util.Date
-import java.util.Locale
-
 
 @Composable
 fun CreateBhandaraScreen(
@@ -88,7 +82,7 @@ fun CreateBhandaraScreen(
     var startingTime by remember { mutableStateOf<LocalDateTime?>(null) }
     var endingTime by remember { mutableStateOf<LocalDateTime?>(null) }
     var foodType by remember { mutableStateOf("veg") } // "veg" or "non-veg"
-    var organizationType by remember { mutableStateOf("individual") } // "organization" or "individual"
+    var organizationType by remember { mutableStateOf("individual") }
     var organizationName by remember { mutableStateOf("") }
     var needVolunteer by remember { mutableStateOf(false) }
     var contactForVolunteer by remember { mutableStateOf("") }
@@ -167,7 +161,8 @@ fun CreateBhandaraScreen(
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Name *") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -176,7 +171,8 @@ fun CreateBhandaraScreen(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description *") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -250,15 +246,16 @@ fun CreateBhandaraScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             // 8. Organization Name [if organizationType == "organization"]
-            if (organizationType == "organization") {
-                OutlinedTextField(
-                    value = organizationName,
-                    onValueChange = { organizationName = it },
-                    label = { Text("Organization Name *") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+
+            OutlinedTextField(
+                value = organizationName,
+                onValueChange = { organizationName = it },
+                label = { if(organizationType == "organization") Text("Organization Name *") else Text("Individual Name *")},
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
 
             // 9. Need Volunteer (Checkbox)
             Row(
@@ -289,7 +286,8 @@ fun CreateBhandaraScreen(
                 value = specialNote,
                 onValueChange = { specialNote = it },
                 label = { Text("Special Note (Optional)") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -344,6 +342,7 @@ fun CreateBhandaraScreen(
                 Text(text = "Every Day", modifier = Modifier.padding(start = 4.dp))
             }
             Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Your Current Location", modifier = Modifier.padding(start = 4.dp))
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
@@ -411,7 +410,7 @@ fun CreateBhandaraScreen(
                             "Please fill all required fields",
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else if (organizationType.equals("organization") && organizationName.isEmpty()) {
+                    } else if (organizationName.isEmpty()) {
                         Toast.makeText(
                             context,
                             "Please fill all required fields",
@@ -477,16 +476,16 @@ fun ApiObserver(
     val context = LocalContext.current
     val viewModel: HomeViewModel = hiltViewModel()
 
-    val base64Image = convertImageToBase64(context, image)
+    val base64Image = convertImageToBase64Compress(context, image)
     val userSharedPreferences = MainApplication.userDataPref
     val phone = userSharedPreferences.getString("phoneNumber","")
     val userId = userSharedPreferences.getString("userId","")
 
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    // Convert Date and LocalDateTime to Double (Unix timestamp)
+    val dateOfBhandaraDouble = dateOfBhandara.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    val startingTimeDouble = startingTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli().toDouble()  // LocalDateTime to milliseconds
+    val endingTimeDouble = endingTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli().toDouble()  // LocalDateTime to milliseconds
 
-    val formattedDateOfBhandara = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(dateOfBhandara)
-    val formattedStartingTime = startingTime.format(formatter)
-    val formattedEndingTime = endingTime.format(formatter)
 
     val bhandaraDto = BhandaraDto(
         id = null,
@@ -496,9 +495,9 @@ fun ApiObserver(
         longitude = longitude,
         createdOn = null,
         updatedOn = null,
-        dateOfBhandara = formattedDateOfBhandara,
-        startingTime = formattedStartingTime,
-        endingTime = formattedEndingTime,
+        dateOfBhandara = dateOfBhandaraDouble,
+        startingTime = startingTimeDouble,
+        endingTime = endingTimeDouble,
         verificationType = "UN_VERIFIED",
         foodType = foodType,
         organizationType = organizationType,
@@ -511,9 +510,6 @@ fun ApiObserver(
         image = base64Image ?: "",
         bhandaraType = bhandaraType
     )
-
-
-
     LaunchedEffect(Unit) {
         viewModel.addBhadara(bhandaraDto)
     }
