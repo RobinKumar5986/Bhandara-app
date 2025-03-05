@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.hometriangle.bhandara"
+    namespace = "com.kgJr.bhandara"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.hometriangle.bhandara"
+        applicationId = "com.kgJr.bhandara"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -125,5 +125,8 @@ dependencies {
 
 //    //payment-dependency
 //    implementation ("com.shreyaspatil:EasyUpiPayment:2.0")
+
+    //game-dependency
+    implementation("com.stevdza-san:sprite:1.1.0")
 
 }

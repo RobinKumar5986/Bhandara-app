@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.hometriangle.bhandara" />
-                  <option name="mobileSdkAppId" value="1:622665600315:android:159d1cf3c1abb6258b3b1e" />
-                  <option name="projectId" value="bhandara-android" />
-                  <option name="projectNumber" value="622665600315" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
